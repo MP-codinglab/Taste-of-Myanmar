@@ -3,94 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Burmese Bites Recipe App</title>
+    <title>Nihongo Hub - N5 & N4 Learning</title>
     
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(to right, #fdfbfb, #ebedee); 
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
             margin: 0;
             padding: 0;
             color: #333;
         }
 
         .app-container {
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
             background-color: white;
             min-height: 100vh;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
         }
 
         header {
-            background-color: #d94a38; 
+            background-color: #b30000; /* Japanese red accent */
             color: white;
-            padding: 20px;
+            padding: 25px;
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2); 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         header h1 {
+            margin: 0 0 5px 0;
+            font-size: 26px;
+        }
+
+        header p {
             margin: 0;
-            font-size: 24px;
+            font-size: 14px;
+            opacity: 0.9;
         }
 
-        .search-bar {
-            padding: 15px;
-            background-color: #eee;
+        .filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            background-color: #f1f3f5;
         }
 
-        .search-bar input {
-            width: 90%;
-            padding: 12px; 
-            border-radius: 30px; 
-            border: 1px solid #ccc;
-            font-size: 16px;
-            outline: none; 
-        }
-
-        .recipe-list {
-            padding: 15px;
-        }
-
-        .recipe-card {
-            background-color: #fff;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        .filter-btn {
+            padding: 8px 20px;
+            border: 1px solid #ced4da;
+            background-color: white;
+            border-radius: 20px;
             cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: #b30000;
+            color: white;
+            border-color: #b30000;
+        }
+
+        .content-list {
+            padding: 20px;
+        }
+
+        .lesson-card {
+            background-color: #fff;
+            border: 1px solid #e9ecef;
+            border-left: 5px solid #b30000;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             transition: transform 0.2s;
-            overflow: hidden; 
         }
 
-        .recipe-card:hover {
-            transform: scale(1.02); 
+        .lesson-card:hover {
+            transform: translateY(-2px);
         }
 
-        .recipe-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover; 
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
         }
 
-        .recipe-content {
-            padding: 15px;
+        .japanese-word {
+            font-size: 28px;
+            font-weight: bold;
+            color: #212529;
+            margin: 0;
         }
 
-        .recipe-card h2 {
-            margin: 0 0 10px 0;
-            color: #d94a38;
-        }
-
-        .recipe-tags {
+        .jlpt-badge {
             font-size: 12px;
-            color: #666;
-            background-color: #f0f0f0;
-            padding: 4px 8px;
-            border-radius: 10px;
-            display: inline-block;
-            margin-right: 5px;
+            font-weight: bold;
+            color: white;
+            background-color: #495057;
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+
+        .reading {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+
+        .meaning {
+            font-size: 16px;
+            color: #343a40;
+            margin-bottom: 15px;
+        }
+
+        .example-box {
+            background-color: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 14px;
+            border-left: 3px solid #ced4da;
+        }
+
+        .example-box p {
+            margin: 0 0 5px 0;
+        }
+
+        .example-box p:last-child {
+            margin-bottom: 0;
+            color: #6c757d;
         }
     </style>
 </head>
@@ -99,78 +142,71 @@
     <div class="app-container">
         
         <header>
-            <h1>Burmese Bites 🇲🇲</h1>
+            <h1>nihongo hub 🇯🇵</h1>
+            <p>Master JLPT N5 & N4 Vocabulary & Grammar</p>
         </header>
 
-        <div class="search-bar">
-            <input type="text" placeholder="Search for a recipe (e.g., Mohinga)..." onkeyup="filterRecipes()">
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterLevel('all')">All</button>
+            <button class="filter-btn" onclick="filterLevel('n5')">JLPT N5</button>
+            <button class="filter-btn" onclick="filterLevel('n4')">JLPT N4</button>
         </div>
 
-        <div class="recipe-list">
+        <div class="content-list">
             
-            <!-- Recipe 1 -->
-            <div class="recipe-card" onclick="openRecipe('Mohinga')">
-                <img class="recipe-image" src="https://images.unsplash.com/photo-1555126634-323283e090fa?auto=format&fit=crop&w=600&q=80" alt="Bowl of Mohinga">
-                <div class="recipe-content">
-                    <h2>Mohinga</h2>
-                    <p>The classic fish and rice noodle soup, thickened with toasted chickpea flour and lemongrass.</p>
-                    <span class="recipe-tags">Breakfast</span>
-                    <span class="recipe-tags">Soup</span>
+            <!-- Card 1: N5 -->
+            <div class="lesson-card" data-level="n5">
+                <div class="card-header">
+                    <h2 class="japanese-word">食べる</h2>
+                    <span class="jlpt-badge">N5</span>
+                </div>
+                <div class="reading">Reading: たべる (taberu)</div>
+                <div class="meaning"><strong>Meaning:</strong> To eat</div>
+                <div class="example-box">
+                    <p><strong>Example:</strong> ぱんを 食べます。</p>
+                    <p>I eat bread.</p>
                 </div>
             </div>
 
-            <!-- Recipe 2 -->
-            <div class="recipe-card" onclick="openRecipe('Laphet Thoke')">
-                <img class="recipe-image" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80" alt="Laphet Thoke Tea Leaf Salad">
-                <div class="recipe-content">
-                    <h2>Laphet Thoke</h2>
-                    <p>Fermented tea leaf salad mixed with crispy fried garlic, peanuts, sesame seeds, and tomatoes.</p>
-                    <span class="recipe-tags">Salad</span>
-                    <span class="recipe-tags">Vegetarian</span>
+            <!-- Card 2: N5 -->
+            <div class="lesson-card" data-level="n5">
+                <div class="card-header">
+                    <h2 class="japanese-word">学校</h2>
+                    <span class="jlpt-badge">N5</span>
+                </div>
+                <div class="reading">Reading: がっこう (gakkou)</div>
+                <div class="meaning"><strong>Meaning:</strong> School</div>
+                <div class="example-box">
+                    <p><strong>Example:</strong> 毎日学校へ行きます。</p>
+                    <p>I go to school every day.</p>
                 </div>
             </div>
 
-            <!-- Recipe 3 -->
-            <div class="recipe-card" onclick="openRecipe('Ohn No Khao Swè')">
-                <img class="recipe-image" src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=600&q=80" alt="Ohn No Khao Swe Coconut Noodles">
-                <div class="recipe-content">
-                    <h2>Ohn No Khao Swè</h2>
-                    <p>Rich coconut chicken noodle soup garnished with crispy noodles, lime, and boiled egg.</p>
-                    <span class="recipe-tags">Dinner</span>
-                    <span class="recipe-tags">Chicken</span>
+            <!-- Card 3: N4 -->
+            <div class="lesson-card" data-level="n4">
+                <div class="card-header">
+                    <h2 class="japanese-word">借ります</h2>
+                    <span class="jlpt-badge">N4</span>
+                </div>
+                <div class="reading">Reading: かります (karimasu)</div>
+                <div class="meaning"><strong>Meaning:</strong> To borrow / to rent</div>
+                <div class="example-box">
+                    <p><strong>Example:</strong> 図書館で本を借りました。</p>
+                    <p>I borrowed a book from the library.</p>
                 </div>
             </div>
 
-            <!-- Recipe 4 -->
-            <div class="recipe-card" onclick="openRecipe('Shan Noodles')">
-                <img class="recipe-image" src="https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=600&q=80" alt="Shan Noodles">
-                <div class="recipe-content">
-                    <h2>Shan Noodles (Shan Khao Swè)</h2>
-                    <p>A comforting bowl of sticky rice noodles topped with a savory tomato and minced chicken or pork ragout, topped with crushed peanuts.</p>
-                    <span class="recipe-tags">Noodles</span>
-                    <span class="recipe-tags">Lunch</span>
+            <!-- Card 4: N4 -->
+            <div class="lesson-card" data-level="n4">
+                <div class="card-header">
+                    <h2 class="japanese-word">経験</h2>
+                    <span class="jlpt-badge">N4</span>
                 </div>
-            </div>
-
-            <!-- Recipe 5 -->
-            <div class="recipe-card" onclick="openRecipe('Nan Gyi Thoke')">
-                <img class="recipe-image" src="https://images.unsplash.com/photo-1564834724105-918b73d1b9e0?auto=format&fit=crop&w=600&q=80" alt="Nan Gyi Thoke">
-                <div class="recipe-content">
-                    <h2>Nan Gyi Thoke</h2>
-                    <p>Often called Burmese spaghetti, featuring thick round rice noodles mixed with rich chicken curry, chili oil, and toasted chickpea flour.</p>
-                    <span class="recipe-tags">Noodles</span>
-                    <span class="recipe-tags">Chicken</span>
-                </div>
-            </div>
-
-            <!-- Recipe 6 -->
-            <div class="recipe-card" onclick="openRecipe('Samosa Salad')">
-                <img class="recipe-image" src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80" alt="Samosa Salad">
-                <div class="recipe-content">
-                    <h2>Samosa Salad (Samusa Thoke)</h2>
-                    <p>A popular street food dish combining chopped crispy samosas, cabbage, onions, and mint drenched in a tangy, spiced soup.</p>
-                    <span class="recipe-tags">Street Food</span>
-                    <span class="recipe-tags">Vegetarian</span>
+                <div class="reading">Reading: けいけん (keiken)</div>
+                <div class="meaning"><strong>Meaning:</strong> Experience</div>
+                <div class="example-box">
+                    <p><strong>Example:</strong> 良い経験になりました。</p>
+                    <p>It became a good experience.</p>
                 </div>
             </div>
 
@@ -179,24 +215,22 @@
     </div>
 
     <script>
-        function openRecipe(recipeName) {
-            alert("You clicked on " + recipeName + "! Later, we will make this open a full recipe page.");
-        }
+        function filterLevel(level) {
+            // Update active button state
+            let buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
 
-        function filterRecipes() {
-            let input = document.querySelector('.search-bar input');
-            let filterText = input.value.toLowerCase();
-            let cards = document.querySelectorAll('.recipe-card');
-            
-            for (let i = 0; i < cards.length; i++) {
-                let cardText = cards[i].querySelector('.recipe-content').innerText.toLowerCase();
-                
-                if (cardText.includes(filterText)) {
-                    cards[i].style.display = ""; 
+            // Filter cards
+            let cards = document.querySelectorAll('.lesson-card');
+            cards.forEach(card => {
+                let cardLevel = card.getAttribute('data-level');
+                if (level === 'all' || cardLevel === level) {
+                    card.style.display = "block";
                 } else {
-                    cards[i].style.display = "none"; 
+                    card.style.display = "none";
                 }
-            }
+            });
         }
     </script>
 
