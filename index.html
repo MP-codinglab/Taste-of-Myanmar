@@ -61,21 +61,19 @@
             box-shadow: 0 3px 6px rgba(0,0,0,0.1);
             cursor: pointer;
             transition: transform 0.2s;
-            overflow: hidden; /* This keeps the images inside the rounded corners */
+            overflow: hidden; 
         }
 
         .recipe-card:hover {
             transform: scale(1.02); 
         }
 
-        /* New styles for the food pictures */
         .recipe-image {
             width: 100%;
             height: 200px;
-            object-fit: cover; /* This prevents the images from looking stretched or squished */
+            object-fit: cover; 
         }
 
-        /* Puts a nice cushion around the text below the image */
         .recipe-content {
             padding: 15px;
         }
@@ -112,7 +110,7 @@
             
             <!-- Recipe 1 -->
             <div class="recipe-card" onclick="openRecipe('Mohinga')">
-                <img class="recipe-image" src="http://googleusercontent.com/image_collection/image_retrieval/8248901638431250635_0" alt="Bowl of Mohinga">
+                <img class="recipe-image" src="https://images.unsplash.com/photo-1555126634-323283e090fa?auto=format&fit=crop&w=600&q=80" alt="Bowl of Mohinga">
                 <div class="recipe-content">
                     <h2>Mohinga</h2>
                     <p>The classic fish and rice noodle soup, thickened with toasted chickpea flour and lemongrass.</p>
@@ -123,7 +121,7 @@
 
             <!-- Recipe 2 -->
             <div class="recipe-card" onclick="openRecipe('Laphet Thoke')">
-                <img class="recipe-image" src="http://googleusercontent.com/image_collection/image_retrieval/16425356600215317763_0" alt="Laphet Thoke Tea Leaf Salad">
+                <img class="recipe-image" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80" alt="Laphet Thoke Tea Leaf Salad">
                 <div class="recipe-content">
                     <h2>Laphet Thoke</h2>
                     <p>Fermented tea leaf salad mixed with crispy fried garlic, peanuts, sesame seeds, and tomatoes.</p>
@@ -134,7 +132,7 @@
 
             <!-- Recipe 3 -->
             <div class="recipe-card" onclick="openRecipe('Ohn No Khao Swè')">
-                <img class="recipe-image" src="http://googleusercontent.com/image_collection/image_retrieval/17099663786669608888_0" alt="Ohn No Khao Swe Coconut Noodles">
+                <img class="recipe-image" src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=600&q=80" alt="Ohn No Khao Swe Coconut Noodles">
                 <div class="recipe-content">
                     <h2>Ohn No Khao Swè</h2>
                     <p>Rich coconut chicken noodle soup garnished with crispy noodles, lime, and boiled egg.</p>
@@ -145,7 +143,7 @@
 
             <!-- Recipe 4 -->
             <div class="recipe-card" onclick="openRecipe('Shan Noodles')">
-                <img class="recipe-image" src="http://googleusercontent.com/image_collection/image_retrieval/16618929626348466036_0" alt="Shan Noodles">
+                <img class="recipe-image" src="https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=600&q=80" alt="Shan Noodles">
                 <div class="recipe-content">
                     <h2>Shan Noodles (Shan Khao Swè)</h2>
                     <p>A comforting bowl of sticky rice noodles topped with a savory tomato and minced chicken or pork ragout, topped with crushed peanuts.</p>
@@ -156,7 +154,7 @@
 
             <!-- Recipe 5 -->
             <div class="recipe-card" onclick="openRecipe('Nan Gyi Thoke')">
-                <img class="recipe-image" src="http://googleusercontent.com/image_collection/image_retrieval/16114657928129280852_0" alt="Nan Gyi Thoke">
+                <img class="recipe-image" src="https://images.unsplash.com/photo-1564834724105-918b73d1b9e0?auto=format&fit=crop&w=600&q=80" alt="Nan Gyi Thoke">
                 <div class="recipe-content">
                     <h2>Nan Gyi Thoke</h2>
                     <p>Often called Burmese spaghetti, featuring thick round rice noodles mixed with rich chicken curry, chili oil, and toasted chickpea flour.</p>
@@ -167,7 +165,7 @@
 
             <!-- Recipe 6 -->
             <div class="recipe-card" onclick="openRecipe('Samosa Salad')">
-                <img class="recipe-image" src="http://googleusercontent.com/image_collection/image_retrieval/15528746051223031450_0" alt="Samosa Salad">
+                <img class="recipe-image" src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80" alt="Samosa Salad">
                 <div class="recipe-content">
                     <h2>Samosa Salad (Samusa Thoke)</h2>
                     <p>A popular street food dish combining chopped crispy samosas, cabbage, onions, and mint drenched in a tangy, spiced soup.</p>
@@ -191,7 +189,6 @@
             let cards = document.querySelectorAll('.recipe-card');
             
             for (let i = 0; i < cards.length; i++) {
-                // The search now looks through the recipe-content div so it doesn't try to search the image URLs!
                 let cardText = cards[i].querySelector('.recipe-content').innerText.toLowerCase();
                 
                 if (cardText.includes(filterText)) {
